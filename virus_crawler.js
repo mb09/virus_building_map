@@ -1,12 +1,12 @@
 let building_list_data = [];
 const buildings = [];
 
-const formatDates = (input)=>{
-    return input.replaceAll(/(\(\d\))/g, (input)=>{return `\n${input}`}).replaceAll(/(（\d）)/g, (input)=>{return `\n${input}`}).replaceAll(/或\d/g, (input)=>{return `\n${input}`}).replaceAll(/及\d/g, (input)=>{return `\n${input}`}).replaceAll(/、\d/g, (input)=>{return `\n${input}`});
+const formatDates = (input) => {
+    return input.replaceAll(/(\(\d\))/g, (input) => { return `\n${input}` }).replaceAll(/(（\d）)/g, (input) => { return `\n${input}` }).replaceAll(/或\d/g, (input) => { return `\n${input}` }).replaceAll(/及\d/g, (input) => { return `\n${input}` }).replaceAll(/、\d/g, (input) => { return `\n${input}` });
 }
 
-const crawlList = async() =>{
-    
+const crawlList = async () => {
+
     const building_list_el = document.querySelector("#building_list");
     const suggestions = document.querySelector("#suggestions");
 
@@ -16,7 +16,7 @@ const crawlList = async() =>{
 
     building_list_data = data["features"].map(building => building["attributes"]);
     building_list_data.sort((a, b) => (a["GazetteDate_Date"] < b["GazetteDate_Date"]) ? 1 : -1)
-    building_list_data.forEach(building =>{
+    building_list_data.forEach(building => {
         const name = document.createElement("a");
         name.innerText = `[${building["District_ZH"]}] ${building["SpecifiedPremises_ZH"]}`;
         name.href = building["URL_ZH"];
@@ -27,15 +27,23 @@ const crawlList = async() =>{
         const period = formatDates(building["Period_ZH"]);
         period_date.innerText = "到訪日期: " + period;
         period_date.classList.add("periodDate");
-        
+
         const deadline_date = document.createElement("div");
-        const deadline =  formatDates(building["Deadline_ZH"]);
+        const deadline = formatDates(building["Deadline_ZH"]);
         deadline_date.innerText = "檢測期限: " + deadline;
         deadline_date.classList.add("deadlineDate");
-        
-        const day_diff = Math.ceil((new Date() - new Date(building["GazetteDate_Date"])) / 86400000) - 1 ;
+
+        const day_diff = Math.floor((new Date() - new Date(building["GazetteDate_Date"])) / 86400000) - 1;
         const announce_date = document.createElement("div");
-        announce_date.innerText = day_diff + "天前公布";
+        if (day_diff == 0) {
+            announce_date.innerText = "今天公布";
+        }
+        else if (day_diff == 1) {
+            announce_date.innerText = "昨天公布";
+        }
+        else {
+            announce_date.innerText = day_diff + "天前公布";
+        }
         announce_date.classList.add("announceDate");
 
         const building_el = document.createElement("li");
@@ -54,12 +62,12 @@ const crawlList = async() =>{
     })
 }
 
-const updateFilter = (e)=>{
+const updateFilter = (e) => {
     buildings.forEach(building => {
-        if(building.innerText.includes(e.target.value)){
+        if (building.innerText.includes(e.target.value)) {
             building.classList.remove("hidden");
         }
-        else{
+        else {
             building.classList.add("hidden");
         }
     })
