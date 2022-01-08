@@ -32,7 +32,7 @@ const crawlList = async() =>{
         building_el.append(name, period_date, deadline_date, announce_date);
         building_el.classList.add("building");
         building_el.classList.add((announce_date < Date.now()) ? "finished" : "ongoing");
-        building_el.style.backgroundColor = `hsl(0,100%,${80 + (20 / 14 * day_diff)}%)`;
+        building_el.style.borderColor = `hsl(0,100%,${80 + (20 / 14 * day_diff)}%)`;
 
         building_list_list.append(building_el);
     })
