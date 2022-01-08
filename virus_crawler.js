@@ -16,7 +16,6 @@ const crawlList = async() =>{
 
     building_list_data = data["features"].map(building => building["attributes"]);
     building_list_data.sort((a, b) => (a["GazetteDate_Date"] < b["GazetteDate_Date"]) ? 1 : -1)
-    console.log(building_list_data[0])
     building_list_data.forEach(building =>{
         const name = document.createElement("a");
         name.innerText = `[${building["District_ZH"]}] ${building["SpecifiedPremises_ZH"]}`;
@@ -36,7 +35,7 @@ const crawlList = async() =>{
         
         const day_diff = Math.ceil((new Date() - new Date(building["GazetteDate_Date"])) / 86400000) - 1 ;
         const announce_date = document.createElement("div");
-        announce_date.innerText = day_diff + "天前";
+        announce_date.innerText = day_diff + "天前公布";
         announce_date.classList.add("announceDate");
 
         const building_el = document.createElement("li");
@@ -56,7 +55,6 @@ const crawlList = async() =>{
 }
 
 const updateFilter = (e)=>{
-    // console.log(buildings[0].innerText);
     buildings.forEach(building => {
         if(building.innerText.includes(e.target.value)){
             building.classList.remove("hidden");
