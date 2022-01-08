@@ -11,6 +11,7 @@ body{
 *, *:before, *:after{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 header, main{
     margin: 1rem 0.25rem;
@@ -20,6 +21,15 @@ header, main{
     width: 100%;
     margin: 0 auto;
     max-width: 800px;
+}
+
+.filter{
+    width: 100%;
+    border: 1px solid gray;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.25rem;
+    margin: 0.25rem 0;
+    padding: 0.25rem;
 }
 
 .buildingList{

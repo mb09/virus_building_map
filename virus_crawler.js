@@ -12,7 +12,7 @@ const crawlList = async() =>{
 
     building_list.forEach(building =>{
         const name = document.createElement("div");
-        name.innerText = building["SpecifiedPremises_ZH"];
+        name.innerText = `[${building["District_ZH"]}] ${building["SpecifiedPremises_ZH"]}`;
         name.classList.add("name");
 
         const period_date = document.createElement("div");
