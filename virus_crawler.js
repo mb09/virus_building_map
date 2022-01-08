@@ -56,7 +56,6 @@ const crawlList = async() =>{
 }
 
 const updateFilter = (e)=>{
-    console.log(e.target.value);
     // console.log(buildings[0].innerText);
     buildings.forEach(building => {
         if(building.innerText.includes(e.target.value)){
