@@ -72,3 +72,4 @@ crawlList();
 
 const filter = document.querySelector("#filter");
 filter.addEventListener("input", updateFilter);
+filter.value = "";
