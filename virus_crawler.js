@@ -33,7 +33,7 @@ const crawlList = async () => {
         deadline_date.innerText = "檢測期限: " + deadline;
         deadline_date.classList.add("deadlineDate");
 
-        const day_diff = Math.floor((new Date() - new Date(building["GazetteDate_Date"])) / 86400000) - 1;
+        const day_diff = Math.ceil((new Date() - new Date(building["GazetteDate_Date"])) / 86400000) - 1;
         const announce_date = document.createElement("div");
         if (day_diff == 0) {
             announce_date.innerText = "今天公布";
@@ -44,6 +44,7 @@ const crawlList = async () => {
         else {
             announce_date.innerText = day_diff + "天前公布";
         }
+        announce_date.innerText += '\n'+ new Date(building["GazetteDate_Date"]).toLocaleDateString();
         announce_date.classList.add("announceDate");
 
         const building_el = document.createElement("li");
