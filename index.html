@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,22 +9,34 @@
     <title>強制檢測 - 指明地方名單</title>
     <link rel="stylesheet" href="virus_crawler.css">
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>強制檢測 - 指明地方名單</h1>
             <p>
                 <a href="https://chp-dashboard.geodata.gov.hk/covid-19/web/main2.html?lang=zh">資料來源</a>
-                <a href="https://services8.arcgis.com/PXQv9PaDJHzt8rp0/arcgis/rest/services/CompulsoryTestingBuilding_View2/FeatureServer/0/query?f=json&where=((Status_Cal%20LIKE%20%27%25Active%25%27))&orderByFields=Status%20ASC%2CDistrict_EN%20ASC&outFields=*&spatialRel=esriSpatialRelIntersects">(json)</a>
+                <a
+                    href="https://services8.arcgis.com/PXQv9PaDJHzt8rp0/arcgis/rest/services/CompulsoryTestingBuilding_View2/FeatureServer/0/query?f=json&where=((Status_Cal%20LIKE%20%27%25Active%25%27))&orderByFields=Status%20ASC%2CDistrict_EN%20ASC&outFields=*&spatialRel=esriSpatialRelIntersects">(json)</a>
             </p>
-        </header>
-        <main>
-                <input placeholder="關鍵詞 (例: 東區)" type="text" name="filter" id="filter" class="filter" list="suggestions">
+
+            <div class="filters">
+                <select name="districts" id="districts">
+                    <option value="" selected>所有區域</option>
+                </select>
+                <select name="dates" id="dates">
+                    <option value="" selected>所有日子</option>
+                </select>
+                <input placeholder="關鍵詞 (例: 銅鑼灣, 街市)" type="text" name="filter" id="filter" class="filter" list="suggestions">
                 <datalist id="suggestions">
                 </datalist>
+            </div>
+        </header>
+        <main>
             <ul id="building_list"></ul>
         </main>
     </div>
     <script src="virus_crawler.js"></script>
 </body>
+
 </html>

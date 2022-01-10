@@ -23,12 +23,21 @@ header, main{
     max-width: 800px;
 }
 
+.filters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    margin: 0.5rem 0;
+}
+
 .filter{
-    width: 100%;
+    flex-grow: 1;
+    height: 100%;
     border: 1px solid gray;
     background-color: rgb(255, 255, 255);
     border-radius: 0.25rem;
-    margin: 0.25rem 0;
+    /* margin: 0.25rem 0; */
     padding: 0.25rem;
 }
 
@@ -46,10 +55,15 @@ header, main{
     padding: 0.25rem;
 
     display: grid;
-    gap: 0.5rem 1rem;
+    gap: 0.5rem 0.25rem;
+    /* align-items: center; */
 
     grid-template-columns: 1fr max-content;
     position: relative;
+}
+
+.building.today{
+    border-color: rgb(255, 128, 128);
 }
 
 .name{
