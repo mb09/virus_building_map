@@ -11,6 +11,7 @@ const distinct = (value, index, self) =>{
 
 const crawlList = async () => {
 
+    const title_suffix = document.querySelector("#title_suffix");
     const building_list_el = document.querySelector("#building_list");
     const suggestions = document.querySelector("#suggestions");
     const districts = document.querySelector("#districts");
@@ -18,6 +19,10 @@ const crawlList = async () => {
 
     const district_options = [];
     const date_options = [];
+
+    let latest_amount = 0;
+    let smallest_day_diff = 999999;
+    let latest_date = "";
 
     const res = await fetch("https://services8.arcgis.com/PXQv9PaDJHzt8rp0/arcgis/rest/services/CompulsoryTestingBuilding_View2/FeatureServer/0/query?f=json&where=((Status_Cal%20LIKE%20%27%25Active%25%27))&orderByFields=Status%20ASC%2CDistrict_EN%20ASC&outFields=*&spatialRel=esriSpatialRelIntersects");
     const data = await res.json();
@@ -59,6 +64,17 @@ const crawlList = async () => {
 
         date_options.push(date);
 
+        if(day_diff < smallest_day_diff)
+        {
+            smallest_day_diff = day_diff;
+            latest_amount = 1;
+            latest_date = date;
+        }
+        else if(day_diff == smallest_day_diff)
+        {
+            latest_amount++;
+        }
+
         const building_el = document.createElement("li");
         building_el.append(name, period_date, deadline_date, announce_date);
         building_el.classList.add("building");
@@ -93,6 +109,8 @@ const crawlList = async () => {
 
         dates.appendChild(date_suggestion_el);
     })
+
+    title_suffix.innerText += ` ${latest_date} 新增 ${latest_amount} 處, 共 ${building_list_data.length} 處`
 }
 
 

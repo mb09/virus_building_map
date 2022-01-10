@@ -23,6 +23,11 @@ header, main{
     max-width: 800px;
 }
 
+#title_suffix{
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
 .filters{
     display: flex;
     flex-wrap: wrap;
