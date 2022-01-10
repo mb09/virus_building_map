@@ -115,9 +115,20 @@ const crawlList = async () => {
 
 
 const updateFilter = () => {
+    
+    let keywords = filter.value.split(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/ ]/g).filter((k)=>{
+        return k.length > 0;
+    });
     buildings.forEach(building => {
         building.classList.remove("hidden");
-        if (! building.innerText.includes(filter.value)) {
+
+        let keywordMatch = false;
+        keywords.forEach(keyword =>{
+            if(building.innerText.includes(keyword)){
+                keywordMatch = true;
+            }
+        })
+        if (keywords.length > 0 && !keywordMatch) {
             building.classList.add("hidden");
         }
         if (! building.innerText.includes(dates.value)) {
