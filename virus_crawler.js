@@ -2,7 +2,7 @@ let building_list_data = [];
 const buildings = [];
 
 const formatDates = (input) => {
-    return input.replaceAll(/(\(\d\))/g, (input) => { return `\n${input}` }).replaceAll(/(（\d）)/g, (input) => { return `\n${input}` }).replaceAll(/或\d/g, (input) => { return `\n${input}` }).replaceAll(/及\d/g, (input) => { return `\n${input}` }).replaceAll(/、\d/g, (input) => { return `\n${input}` });
+    return input.replaceAll(/(\(\d\))/g, (input) => { return `\n${input}` }).replaceAll(/(（\d）)/g, (input) => { return `\n${input}` }).replaceAll(/:\d{2} \d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])/g, (input) => { return input.split(" ").join("\n") }).replaceAll(/或\d/g, (input) => { return `\n${input}` }).replaceAll(/及\d/g, (input) => { return `\n${input}` }).replaceAll(/、\d/g, (input) => { return `\n${input}` });
 }
 
 const distinct = (value, index, self) =>{
@@ -27,9 +27,10 @@ const crawlList = async () => {
     const res = await fetch("https://services8.arcgis.com/PXQv9PaDJHzt8rp0/arcgis/rest/services/CompulsoryTestingBuilding_View2/FeatureServer/0/query?f=json&where=((Status_Cal%20LIKE%20%27%25Active%25%27))&orderByFields=Status%20ASC%2CDistrict_EN%20ASC&outFields=*&spatialRel=esriSpatialRelIntersects");
     const data = await res.json();
 
-
     building_list_data = data["features"].map(building => building["attributes"]);
     building_list_data.sort((a, b) => (a["GazetteDate_Date"] < b["GazetteDate_Date"]) ? 1 : -1)
+    console.log(building_list_data[0]);
+
     building_list_data.forEach(building => {
         const name = document.createElement("a");
         name.innerText = `[${building["District_ZH"]}] ${building["SpecifiedPremises_ZH"]}`;
@@ -58,7 +59,7 @@ const crawlList = async () => {
         else {
             announce_date.innerText = day_diff + "天前公布";
         }
-        const date = new Date(building["GazetteDate_Date"]).toLocaleDateString();
+        const date = building["GazetteDate"];
         announce_date.innerText += '\n'+ date;
         announce_date.classList.add("announceDate");
 
